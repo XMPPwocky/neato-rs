@@ -1,0 +1,41 @@
+[root]
+name = "neato-rs"
+version = "0.0.1"
+dependencies = [
+ "back 0.0.1",
+]
+
+[[package]]
+name = "back"
+version = "0.0.1"
+dependencies = [
+ "gl 0.0.1 (git+https://github.com/bjz/gl-rs#325b34c470b18f83756fe86e48cce56dba28d648)",
+]
+
+[[package]]
+name = "gl"
+version = "0.0.1"
+source = "git+https://github.com/bjz/gl-rs#325b34c470b18f83756fe86e48cce56dba28d648"
+dependencies = [
+ "gl_generator 0.0.1 (git+https://github.com/bjz/gl-rs#325b34c470b18f83756fe86e48cce56dba28d648)",
+]
+
+[[package]]
+name = "gl_generator"
+version = "0.0.1"
+source = "git+https://github.com/bjz/gl-rs#325b34c470b18f83756fe86e48cce56dba28d648"
+dependencies = [
+ "khronos_api 0.0.1 (git+https://github.com/bjz/gl-rs#325b34c470b18f83756fe86e48cce56dba28d648)",
+ "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#7d867d8020e6ee845d198e012124c698738804a2)",
+]
+
+[[package]]
+name = "khronos_api"
+version = "0.0.1"
+source = "git+https://github.com/bjz/gl-rs#325b34c470b18f83756fe86e48cce56dba28d648"
+
+[[package]]
+name = "rust-xml"
+version = "0.1.0"
+source = "git+https://github.com/netvl/rust-xml#7d867d8020e6ee845d198e012124c698738804a2"
+
