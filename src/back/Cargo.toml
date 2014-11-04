@@ -1,0 +1,9 @@
+[package]
+
+name = "back"
+version = "0.0.1"
+authors = ["Nathaniel Theis <nttheis@gmail.com>"]
+
+[dependencies.gl]
+git = "https://github.com/bjz/gl-rs"
+
