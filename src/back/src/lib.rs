@@ -1,57 +1,41 @@
 //! Wraps the underlying graphics API (OpenGL).
-#![feature(globs)]
+#![feature(globs, macro_rules)]
 
 extern crate gl;
 
 use std::sync::Arc;
 
-mod shader;
+mod raiigl;
 
 fn check_glerror() {
-    assert_eq!(gl::GetError(), gl::NO_ERROR)
-}
-enum Death {
-    ShaderDeath(gl::types::GLuint),
-    ShaderProgramDeath(gl::types::GLuint)
-}
-impl Death {
-    fn process(self) {
-        match self {
-            ShaderDeath(handle) => {
-                gl::DeleteShader(handle);
-            },
-            ShaderProgramDeath(handle) => {
-                gl::DeleteProgram(handle);
-            }
-        }
-        check_glerror();
-    }
+    assert_eq!(unsafe { gl::GetError() }, gl::NO_ERROR)
 }
 pub struct Backend {
-    // cloned often
-    death_sender: Sender<Death>,
-    deaths: Receiver<Death>,
-
-    packets: Vec<RenderPacket>
+    raiigl: raiigl::RAIIGL,
+    marker_nosend: std::kinds::marker::NoSend
 }
-
-pub struct Material {
-    shaders: shader::ShaderProgram,
-
-    // TODO: uniforms, etc. must go here eventually
-}
-
-pub enum RenderPacket {
-    
 
 impl Backend {
-    pub fn render(&mut self) {
-        loop {
-            match self.deaths.try_recv() {
-                Ok(death) => death.process(),
-                Err(std::comm::Empty) => break,
-                Err(std::comm::Disconnected) => unreachable!(),
-            }
+    pub fn start_frame(&mut self) {
+        unsafe {
+            gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT)
         }
     }
+
+    pub fn end_frame(&mut self) {
+        self.raiigl.update()
+    }
+
+   /* pub fn render_mesh(&mut self, mesh: &Mesh) {
+        unimplemented!()
+    }
+
+    pub fn use_material(&mut self, material: Material) {
+        unimplemented!()
+        //self.active_material = material;
+
+       // gl::UseProgram(self.active_material.handle);
+        
+        check_glerror();
+    }*/
 }
